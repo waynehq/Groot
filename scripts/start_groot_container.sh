@@ -16,10 +16,6 @@ case "$1" in
           ;;
 esac
 
-#if [ -z "$DISPLAY" ]; then
-    #echo "ABORT: DISPLAY not set"
-    #exit 1
-#fi
 
 DOCKER_MAJOR_VERSION=$(docker version --format '{{.Client.Version}}' | cut -d. -f1)
 AMD_GPU=$(lspci | grep "VGA" | grep "AMD")
@@ -33,7 +29,7 @@ fi
 
 echo $RUNTIME
 
-docker run -it --name groot-env --rm \
+docker run -it --name --rm \
   --user=$(id -u $USER):$(id -g $USER) \
   --group-add=27 \
   --workdir="/home/$USER" \
@@ -51,5 +47,5 @@ docker run -it --name groot-env --rm \
   -e XAUTHORITY=/tmp/.Xauthority \
   -v ${XAUTHORITY}:/tmp/.Xauthority \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
-  crp:groot bash \
+  groot:groot bash \
   -c "/usr/src/third_party/Groot/build/./Groot"

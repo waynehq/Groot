@@ -1,0 +1,27 @@
+FROM ubuntu:focal
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
+
+# install dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    qtbase5-dev \
+    libqt5svg5-dev \ 
+    libzmq3-dev \
+    libdw-dev \
+    gcc \
+    g++ \
+    build-essential \
+    libssl-dev \
+    libncurses-dev \
+    vim
+    
+WORKDIR /usr/src
+COPY third_party /usr/src/third_party
+RUN cd /usr/src/third_party/Cmake && \
+    ./bootstrap && make -j8 && make install
+RUN cd /usr/src/third_party/BehaviorTree.CPP && \
+    mkdir build && cd build && cmake .. && make && make install
+RUN cd /usr/src/third_party/Groot && \
+    mkdir build && cd build && cmake .. && make && make install

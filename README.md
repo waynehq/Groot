@@ -5,7 +5,7 @@ Groot install based on docker.
 
 ```asm
   cd ./scripts
-  ./start_groot_container.sh
+  ./groot.sh
 ```
 
 <img src="./docs/Groot.png">
